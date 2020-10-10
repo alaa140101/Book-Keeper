@@ -2,7 +2,7 @@
 
 :root {
   --primary-color: #ea3131;
-  --border-radiuse: 20px;
+  --border-radiuse: 15px;
 }
 
 html {
@@ -142,7 +142,43 @@ h3 {
 }
 
 .modal-content {
-  
+  padding: 20px;
+  background: whitesmoke;
+}
+
+/* Form */
+.form-group {
+  height: 55px;
+}
+
+.form-input {
+  width: 97%;
+  padding: 5px;
+  border: 2px solid var(--primary-color);
+  border-radius: var(--border-radiuse);
+  display: block;
+  outline: none;
+}
+.form-label {
+  color: var(--primary-color);
+  display: block;
+}
+button {
+  cursor: pointer;
+  color: white;
+  background: var(--primary-color);
+  border-radius: var(--border-radiuse);
+  border: none;
+  padding: 5px;
+  height: 30px;
+  width: 100px;
+  margin-top: 10px;
+}
+button:hover {
+  filter: brightness(110%);
+}
+button:focus {
+  outline: none;
 }
 
 /* Media Query: Large Smartphone */
