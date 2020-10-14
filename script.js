@@ -39,20 +39,22 @@ function validate(nameValue, urlValue) {
 
 // Build Bookmarks DOM
 function buildBookmarks() {
+  // Remove all bookmark elements
+  bookmarksContainer.textContent = '';
   // Build items
   bookmarks.forEach((bookmark) => {
     const { name, url } = bookmark;
-    // Create Item        onclick="${deleteBookmark(url)}"
+    // Create Item        
     const item = `
     <div class="item">
-      <i class="fas fa-times" id="delete-bookmark" title="Delete Bookmark"></i>
+      <i class="fas fa-times" id="delete-bookmark" title="Delete Bookmark" onclick="deleteBookmark('${url}')"></i>
       <div class="name">
           <img src="https://s2.googleusercontent.com/s2/favicons?domain=${url}" alt="Favicon">
           <a href="${url}" target="_blank">${name}</a>
       </div>
     </div>
     `;
-    // Append to bookmarks container
+    // Insert to bookmarks container
     bookmarksContainer.insertAdjacentHTML("beforeend",  item);
   });
 }
@@ -62,17 +64,21 @@ function fetchBookmarks() {
   // Get bookmarks from localStorage if available
   if(localStorage.getItem('bookmarks')) {
     bookmarks = JSON.parse(localStorage.getItem('bookmarks'));
-  }else{
-    // Create bookmarks array in localStorage
-    bookmarks = [
-      {
-        name: 'Google',
-        url: 'http://google.com',
-      },
-    ];
-    localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
-  }
   buildBookmarks();
+  }
+}
+
+// Delete Bookmark
+function deleteBookmark(url) {
+  console.log('delete');
+  bookmarks.forEach((bookmark, i) => {
+    if (bookmark.url === url) {
+      bookmarks.splice(i, 1);
+    }
+  });
+  // Update bookmarks array in localStroage, re-populate DOM
+  localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
+  fetchBookmarks();
 }
 
 // Handle Data from Form
