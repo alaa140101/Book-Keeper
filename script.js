@@ -17,6 +17,7 @@ function showModal() {
 // Modal Event Listeners
 modalShow.addEventListener('click', showModal);
 modalClose.addEventListener('click', () => modal.classList.remove('show-modal'));
+bookmarkForm.addEventListener('submit', () => modal.classList.remove('show-modal'));
 window.addEventListener('click', (e) => (e.target === modal ? modal.classList.remove('show-modal') : false));
 
 // Validate Form
@@ -36,6 +37,26 @@ function validate(nameValue, urlValue) {
   return true;  
 }
 
+// Build Bookmarks DOM
+function buildBookmarks() {
+  // Build items
+  bookmarks.forEach((bookmark) => {
+    const { name, url } = bookmark;
+    // Create Item        onclick="${deleteBookmark(url)}"
+    const item = `
+    <div class="item">
+      <i class="fas fa-times" id="delete-bookmark" title="Delete Bookmark"></i>
+      <div class="name">
+          <img src="https://s2.googleusercontent.com/s2/favicons?domain=${url}" alt="Favicon">
+          <a href="${url}" target="_blank">${name}</a>
+      </div>
+    </div>
+    `;
+    // Append to bookmarks container
+    bookmarksContainer.insertAdjacentHTML("beforeend",  item);
+  });
+}
+
 // Fetch Bookmarks
 function fetchBookmarks() {
   // Get bookmarks from localStorage if available
@@ -51,6 +72,7 @@ function fetchBookmarks() {
     ];
     localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
   }
+  buildBookmarks();
 }
 
 // Handle Data from Form
